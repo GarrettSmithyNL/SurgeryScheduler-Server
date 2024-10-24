@@ -12,6 +12,10 @@ public class DoctorServices {
   @Autowired
   private DoctorRepository doctorRepository;
 
+  public Doctor createDoctor(Doctor doctor) {
+    return doctorRepository.save(doctor);
+  }
+
   public Doctor findDoctorById (long id) {
     Optional<Doctor> optionalDoctor = doctorRepository.findById(id);
     return optionalDoctor.orElse(null);
