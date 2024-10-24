@@ -2,6 +2,7 @@ package com.keyin.domain.Patient;
 
 import com.keyin.domain.Address.Address;
 import com.keyin.domain.Address.AddressRepository;
+import com.keyin.domain.Address.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
