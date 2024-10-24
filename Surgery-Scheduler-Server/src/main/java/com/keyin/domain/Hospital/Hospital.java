@@ -14,7 +14,7 @@ public class Hospital {
   private long id;
 
   @OneToOne
-  private Address addressID;
+  private Address address;
 
   private String name;
 
@@ -30,11 +30,11 @@ public class Hospital {
   }
 
   public Address getAddressID() {
-    return addressID;
+    return address;
   }
 
-  public void setAddressID(Address addressID) {
-    this.addressID = addressID;
+  public void setAddressID(Address address) {
+    this.address = address;
   }
 
   public String getName() {
