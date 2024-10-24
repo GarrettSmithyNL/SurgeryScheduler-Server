@@ -1,5 +1,7 @@
 package com.keyin.domain.Patient;
 
+import com.keyin.domain.Address.Address;
+import com.keyin.domain.Address.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +13,25 @@ public class PatientService {
   @Autowired
   private PatientRepository patientRepository;
 
+  @Autowired
+  private AddressRepository addressRepository;
+
   public Patient createPatient (Patient patient) {
+    Address address = addressRepository.findById(patient.getAddress().getId())
+            .orElseThrow(() -> new RuntimeException("Address not found"));
+    patient.setAddress(address);
     return patientRepository.save(patient);
   }
+
+  public List<Patient> createPatients(List<Patient> patients) {
+    for (Patient patient : patients) {
+      Address address = addressRepository.findById(patient.getAddress().getId())
+              .orElseThrow(() -> new RuntimeException("Address not found"));
+      patient.setAddress(address);
+    }
+    return (List<Patient>) patientRepository.saveAll(patients);
+  }
+
 
   public Patient findByPatientId (long id) {
     Optional<Patient> patientOptional = patientRepository.findById(id);
