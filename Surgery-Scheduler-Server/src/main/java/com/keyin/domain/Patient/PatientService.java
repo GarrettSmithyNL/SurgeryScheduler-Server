@@ -1,5 +1,6 @@
 package com.keyin.domain.Patient;
 
+import com.keyin.domain.Address.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,10 @@ public class PatientService {
 
   public Patient createPatient (Patient patient) {
     return patientRepository.save(patient);
+  }
+
+  public List<Patient> createPatients(List<Patient> patients) {
+    return (List<Patient>) patientRepository.saveAll(patients);
   }
 
   public Patient findByPatientId (long id) {
