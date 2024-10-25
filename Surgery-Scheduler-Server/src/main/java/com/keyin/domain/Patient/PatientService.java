@@ -17,11 +17,13 @@ public class PatientService {
   @Autowired
   private AddressRepository addressRepository;
 
-  public Patient createPatient (Patient patient) {
-    Address address = addressRepository.findById(patient.getAddress().getId())
+
+  public Patient createPatient (Patient newPatient) {
+    Address address = addressRepository.findById(newPatient.getAddress().getId())
             .orElseThrow(() -> new RuntimeException("Address not found"));
-    patient.setAddress(address);
-    return patientRepository.save(patient);
+    newPatient.setAddress(address);
+    return patientRepository.save(newPatient);
+
   }
 
   public List<Patient> createPatients(List<Patient> patients) {
