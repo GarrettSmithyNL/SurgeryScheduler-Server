@@ -1,16 +1,36 @@
 package com.keyin.domain.Hospital;
 
+import com.keyin.domain.Address.Address;
+import com.keyin.domain.Address.AddressRepository;
 import com.keyin.domain.types.SurgeryTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class HospitalService {
+
   @Autowired
   private HospitalRepository hospitalRepository;
+
+  @Autowired
+  private AddressRepository addressRepository;
+
+  public Hospital createHospital(Hospital newHospital) {
+    Address address = addressRepository.findById(newHospital.getAddressID().getId())
+            .orElseThrow(() -> new RuntimeException("Address not found"));
+    newHospital.setAddressID(address);
+    return hospitalRepository.save(newHospital);
+  }
+
+  public List<SurgeryTypes> initializeSurgeryTypes() {
+    List<SurgeryTypes> surgeryTypes = Arrays.asList(SurgeryTypes.values());
+    return surgeryTypes;
+  }
+
 
   public Hospital findById (long id) {
     Optional<Hospital> optionalHospital = hospitalRepository.findById(id);
