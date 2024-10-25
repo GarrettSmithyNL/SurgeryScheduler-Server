@@ -52,4 +52,6 @@ public class Hospital {
   public void setListOfSurgeriesThatCanBeDone(List<SurgeryTypes> listOfSurgeriesThatCanBeDone) {
     this.listOfSurgeriesThatCanBeDone = listOfSurgeriesThatCanBeDone;
   }
+
+
 }
