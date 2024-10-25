@@ -3,6 +3,7 @@ package com.keyin.domain.Patient;
 import com.keyin.domain.Address.Address;
 import com.keyin.domain.Address.AddressRepository;
 import com.keyin.domain.Address.Address;
+import com.keyin.domain.Address.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,22 +16,17 @@ public class PatientService {
   private PatientRepository patientRepository;
 
   @Autowired
-  private AddressRepository addressRepository;
+  private AddressService addressService;
 
 
   public Patient createPatient (Patient newPatient) {
-    Address address = addressRepository.findById(newPatient.getAddress().getId())
-            .orElseThrow(() -> new RuntimeException("Address not found"));
-    newPatient.setAddress(address);
+    newPatient.setAddress(addressService.createAddress(newPatient.getAddress()));
     return patientRepository.save(newPatient);
-
   }
 
   public List<Patient> createPatients(List<Patient> patients) {
     for (Patient patient : patients) {
-      Address address = addressRepository.findById(patient.getAddress().getId())
-              .orElseThrow(() -> new RuntimeException("Address not found"));
-      patient.setAddress(address);
+      patient.setAddress(addressService.createAddress(patient.getAddress()));
     }
     return (List<Patient>) patientRepository.saveAll(patients);
   }

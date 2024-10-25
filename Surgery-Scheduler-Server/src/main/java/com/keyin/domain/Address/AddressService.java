@@ -22,7 +22,14 @@ public class AddressService {
   }
 
   public List<Address> createAddresses(List<Address> addresses) {
-    return (List<Address>) addressRepository.saveAll(addresses);
+    for (Address address : addresses) {
+      Address addressInDB = findAddressByStreetAndHouseNumber(address);
+      if (addressInDB != null && addressInDB.getCity().equals(address.getCity())) {
+        address = addressInDB;
+      }
+      addressRepository.save(address);
+    }
+    return addresses;
   }
 
   public List<Address> findAllAddresses () {

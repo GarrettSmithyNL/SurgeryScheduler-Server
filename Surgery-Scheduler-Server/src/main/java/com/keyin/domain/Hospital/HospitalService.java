@@ -2,6 +2,7 @@ package com.keyin.domain.Hospital;
 
 import com.keyin.domain.Address.Address;
 import com.keyin.domain.Address.AddressRepository;
+import com.keyin.domain.Address.AddressService;
 import com.keyin.domain.types.SurgeryTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,10 @@ public class HospitalService {
   private HospitalRepository hospitalRepository;
 
   @Autowired
-  private AddressRepository addressRepository;
+  private AddressService addressService;
 
   public Hospital createHospital(Hospital newHospital) {
-    Address address = addressRepository.findById(newHospital.getAddressID().getId())
-            .orElseThrow(() -> new RuntimeException("Address not found"));
-    newHospital.setAddressID(address);
+    newHospital.setAddress(addressService.createAddress(newHospital.getAddress()));
     return hospitalRepository.save(newHospital);
   }
 
