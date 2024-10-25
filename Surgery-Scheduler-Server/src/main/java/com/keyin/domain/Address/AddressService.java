@@ -21,6 +21,10 @@ public class AddressService {
     return addressRepository.save(address);
   }
 
+  public List<Address> createAddresses(List<Address> addresses) {
+    return (List<Address>) addressRepository.saveAll(addresses);
+  }
+
   public List<Address> findAllAddresses () {
     return (List<Address>) addressRepository.findAll();
   }
