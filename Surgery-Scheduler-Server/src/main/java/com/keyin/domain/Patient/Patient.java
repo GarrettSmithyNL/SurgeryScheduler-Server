@@ -14,7 +14,7 @@ public class Patient {
   private String mcpNumber;
   private String name;
 
-  @OneToOne
+  @ManyToOne
   private Address address;
 
   public String getMcpNumber() {

@@ -13,7 +13,7 @@ public class Hospital {
   @GeneratedValue(generator = "hospital_sequence")
   private long id;
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
   private Address address;
 
   private String name;
@@ -29,11 +29,11 @@ public class Hospital {
     this.id = id;
   }
 
-  public Address getAddressID() {
+  public Address getAddress() {
     return address;
   }
 
-  public void setAddressID(Address address) {
+  public void setAddress(Address address) {
     this.address = address;
   }
 
