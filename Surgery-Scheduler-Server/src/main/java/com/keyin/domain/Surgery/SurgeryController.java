@@ -32,4 +32,9 @@ public class SurgeryController {
         return surgeryService.findSurgeriesByHospital(hospitalId);
     }
 
+    @GetMapping("/surgeries/doctor/{doctorId}")
+    public List<Surgery> getSurgeriesByDoctor(@PathVariable Long doctorId) {
+        return surgeryService.findSurgeriesByDoctorId(doctorId);
+    }
+
 }

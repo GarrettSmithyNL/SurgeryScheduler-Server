@@ -54,4 +54,8 @@ public class SurgeryService {
     Optional<Hospital> hospital = hospitalRepository.findById(hospitalId);
     return hospital.map(surgeryRepository::findSurgeriesByHospital).orElse(null);
   }
+
+  public List<Surgery> findSurgeriesByDoctorId(Long doctorId) {
+    return surgeryRepository.findByDoctorDoingSurgeryId(doctorId);
+  }
 }
