@@ -1,10 +1,10 @@
 package com.keyin.domain.Doctor;
 
-
 import com.keyin.domain.types.SurgeryTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -29,5 +29,10 @@ public class DoctorController {
         return doctorServices.findAllByListOfPossibleSurgeriesIsContainingIgnoreCase(surgeryType);
     }
 
-
+    // Endpoint to get available doctors by date
+    @GetMapping("/available")
+    public List<Doctor> getAvailableDoctors(@RequestParam String date) {
+        LocalDate localDate = LocalDate.parse(date); // Parse the date from query parameter
+        return doctorServices.findAvailableDoctorsByDate(localDate);
+    }
 }

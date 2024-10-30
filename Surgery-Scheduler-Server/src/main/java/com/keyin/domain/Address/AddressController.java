@@ -39,5 +39,16 @@ public class AddressController {
         address.setHouseNumber(houseNumber);
         return addressService.findAddressByStreetAndHouseNumber(address);
     }
+    @PutMapping("/{id}")
+    public Address updateAddress(@PathVariable long id, @RequestBody Address updatedAddress) {
+        updatedAddress.setId(id);
+        return addressService.updateAddress(updatedAddress);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteAddress(@PathVariable long id) {
+        addressService.deleteAddress(id);
+    }
+
 
 }

@@ -5,6 +5,7 @@ import com.keyin.domain.types.SurgeryTypes;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.time.LocalDate;
 
 @Entity
 public class Doctor {
@@ -20,6 +21,9 @@ public class Doctor {
 
   @OneToMany
   private List<Hospital> listOfWorkableHospitals;
+
+  @ElementCollection
+  private List<LocalDate> availableDates; // New field for tracking available dates
 
   public long getId() {
     return id;
@@ -52,4 +56,6 @@ public class Doctor {
   public void setListOfWorkableHospitals(List<Hospital> listOfWorkableHospitals) {
     this.listOfWorkableHospitals = listOfWorkableHospitals;
   }
+  public List<LocalDate> getAvailableDates() { return availableDates; }
+  public void setAvailableDates(List<LocalDate> availableDates) { this.availableDates = availableDates; }
 }

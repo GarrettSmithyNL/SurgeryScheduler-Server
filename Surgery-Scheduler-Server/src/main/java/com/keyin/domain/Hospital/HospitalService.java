@@ -47,4 +47,5 @@ public class HospitalService {
   public List<Hospital> findHospitalBySurgeryThatCanBeDone(SurgeryTypes surgeryTypes) {
     return hospitalRepository.findAllByListOfSurgeriesThatCanBeDone(surgeryTypes);
   }
+
 }

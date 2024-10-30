@@ -2,10 +2,14 @@ package com.keyin.domain.Patient;
 
 
 import com.keyin.domain.Address.Address;
+import com.keyin.domain.Surgery.Surgery;
+import com.keyin.domain.Surgery.SurgeryService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/patients")
@@ -13,6 +17,9 @@ public class PatientController {
 
     @Autowired
     private PatientService patientService;
+
+    @Autowired
+    private SurgeryService surgeryService;
 
     @PostMapping
     public Patient createPatient(@RequestBody Patient newPatient) {
@@ -38,4 +45,9 @@ public class PatientController {
     public Patient getPatientByMcpNumber(@RequestParam String mcpNumber) {
         return patientService.findByMcpNumber(mcpNumber);
     }
+    @GetMapping("/{patientId}/upcoming-surgeries")
+    public List<Surgery> getUpcomingSurgeriesForPatient(@PathVariable long patientId) {
+        return surgeryService.findUpcomingSurgeriesForPatient(patientId);
+    }
+
 }

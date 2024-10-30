@@ -44,6 +44,35 @@ public class AddressService {
   public Address findAddressByStreetAndHouseNumber (Address address) {
     return addressRepository.findAddressByStreetAndHouseNumber(address.getStreet(), address.getHouseNumber());
   }
+  // New method to update an existing address
+  public Address updateAddress(long id, Address updatedAddress) {
+    Optional<Address> optionalAddress = addressRepository.findById(id);
+    if (optionalAddress.isPresent()) {
+      Address address = optionalAddress.get();
+      address.setStreet(updatedAddress.getStreet());
+      address.setHouseNumber(updatedAddress.getHouseNumber());
+      address.setCity(updatedAddress.getCity());
+      address.setPostalCode(updatedAddress.getPostalCode());
+      return addressRepository.save(address);
+    } else {
+      return null;
+    }
+  }
 
+  // New method to delete an address by ID
+  public void deleteAddress(long id) {
+    addressRepository.deleteById(id);
+  }
+
+
+  public Address updateAddress(Address updatedAddress) {
+    Optional<Address> existingAddress = addressRepository.findById(updatedAddress.getId());
+    if (existingAddress.isPresent()) {
+      // Save the updated address to persist changes in the database
+      return addressRepository.save(updatedAddress);
+    } else {
+      throw new RuntimeException("Address not found with id " + updatedAddress.getId());
+    }
+  }
 
 }

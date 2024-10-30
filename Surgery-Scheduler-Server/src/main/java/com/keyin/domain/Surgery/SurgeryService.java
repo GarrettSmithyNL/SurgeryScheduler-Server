@@ -9,6 +9,8 @@ import com.keyin.domain.Patient.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,4 +56,14 @@ public class SurgeryService {
     Optional<Hospital> hospital = hospitalRepository.findById(hospitalId);
     return hospital.map(surgeryRepository::findSurgeriesByHospital).orElse(null);
   }
+  public List<Surgery> findSurgeriesByDoctor(long doctorId) {
+    return surgeryRepository.findAllByDoctorDoingSurgery_Id(doctorId);
+  }
+  public List<Surgery> findSurgeriesByTimeRange(LocalDateTime startTime, LocalDateTime endTime) {
+    return surgeryRepository.findAllByTimeStartBetween(startTime, endTime);
+  }
+  public List<Surgery> findUpcomingSurgeriesForPatient(long patientId) {
+    return surgeryRepository.findUpcomingSurgeriesByPatientId(patientId);  // Modify as per repository
+  }
+
 }
