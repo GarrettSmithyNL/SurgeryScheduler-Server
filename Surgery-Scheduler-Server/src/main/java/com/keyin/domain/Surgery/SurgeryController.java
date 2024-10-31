@@ -37,4 +37,9 @@ public class SurgeryController {
         return surgeryService.findSurgeriesByDoctorId(doctorId);
     }
 
+    @GetMapping("/surgeries/patient/{patientId}/upcoming")
+    public List<Surgery> getUpcomingSurgeriesForPatient(@PathVariable Long patientId) {
+        return surgeryService.findUpcomingSurgeriesForPatient(patientId);
+    }
+
 }

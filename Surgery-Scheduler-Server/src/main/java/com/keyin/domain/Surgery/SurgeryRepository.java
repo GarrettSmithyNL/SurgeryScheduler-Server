@@ -10,4 +10,5 @@ import java.util.List;
 public interface SurgeryRepository extends CrudRepository<Surgery, Long> {
   List<Surgery> findSurgeriesByHospital(Hospital hospital);
   List<Surgery> findByDoctorDoingSurgeryId(Long doctorId);
+  List<Surgery> findUpcomingSurgeriesByPatientId(Long patientId);
 }

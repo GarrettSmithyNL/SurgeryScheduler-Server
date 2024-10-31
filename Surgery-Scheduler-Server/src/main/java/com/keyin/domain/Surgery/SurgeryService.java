@@ -58,4 +58,8 @@ public class SurgeryService {
   public List<Surgery> findSurgeriesByDoctorId(Long doctorId) {
     return surgeryRepository.findByDoctorDoingSurgeryId(doctorId);
   }
+
+  public List<Surgery> findUpcomingSurgeriesForPatient(Long patientId) {
+    return surgeryRepository.findUpcomingSurgeriesByPatientId(patientId);
+  }
 }
