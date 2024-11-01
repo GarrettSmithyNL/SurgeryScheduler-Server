@@ -1,5 +1,6 @@
 package com.keyin.domain.Surgery;
 
+import com.keyin.domain.Patient.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,11 @@ public class SurgeryController {
     @PostMapping
     public Surgery createSurgery(@RequestBody Surgery newSurgery) {
         return surgeryService.createSurgery(newSurgery);
+    }
+
+    @PostMapping ("/batch")
+    public List<Surgery> createPatients(@RequestBody List<Surgery> surgeries) {
+        return surgeryService.createSurgeries(surgeries);
     }
 
     @GetMapping

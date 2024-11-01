@@ -44,6 +44,4 @@ public class AddressService {
   public Address findAddressByStreetAndHouseNumber (Address address) {
     return addressRepository.findAddressByStreetAndHouseNumber(address.getStreet(), address.getHouseNumber());
   }
-
-
 }
