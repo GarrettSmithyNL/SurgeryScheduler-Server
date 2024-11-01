@@ -2,10 +2,13 @@ package com.keyin.domain.Surgery;
 
 import com.keyin.domain.Doctor.Doctor;
 import com.keyin.domain.Doctor.DoctorRepository;
+import com.keyin.domain.Doctor.DoctorServices;
 import com.keyin.domain.Hospital.Hospital;
 import com.keyin.domain.Hospital.HospitalRepository;
+import com.keyin.domain.Hospital.HospitalService;
 import com.keyin.domain.Patient.Patient;
 import com.keyin.domain.Patient.PatientRepository;
+import com.keyin.domain.Patient.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,26 +22,26 @@ public class SurgeryService {
   private SurgeryRepository surgeryRepository;
 
   @Autowired
-    private HospitalRepository hospitalRepository;
+    private HospitalService hospitalService;
 
   @Autowired
-    private DoctorRepository doctorRepository;
+    private DoctorServices doctorServices;
 
   @Autowired
-  private PatientRepository patientRepository;
+  private PatientService patientService;
 
-  public Surgery createSurgery(Surgery surgery) {
+  public Surgery createSurgery(Surgery newSurgery) {
+    newSurgery.setPatient(patientService.createPatient(newSurgery.getPatient()));
+    newSurgery.setDoctorDoingSurgery(doctorServices.createDoctor(newSurgery.getDoctorDoingSurgery()));
+    newSurgery.setHospital(hospitalService.createHospital(newSurgery.getHospital()));
+    return surgeryRepository.save(newSurgery);
+  }
 
-    Optional<Patient> patient = patientRepository.findById(surgery.getPatient().getId());
-    patient.ifPresent(surgery::setPatient);
-
-    Optional<Doctor> doctor = doctorRepository.findById(surgery.getDoctorDoingSurgery().getId());
-    doctor.ifPresent(surgery::setDoctorDoingSurgery);
-
-    Optional<Hospital> hospital = hospitalRepository.findById(surgery.getHospital().getId());
-    hospital.ifPresent(surgery::setHospital);
-
-    return surgeryRepository.save(surgery);
+  public List<Surgery> createSurgeries(List<Surgery> surgeries) {
+    for (Surgery surgery : surgeries) {
+      surgery = createSurgery(surgery);
+    }
+    return surgeries;
   }
 
   public List<Surgery> findAllSurgeries() {
@@ -52,8 +55,9 @@ public class SurgeryService {
 
 
   public List<Surgery> findSurgeriesByHospital(Long hospitalId) {
-    Optional<Hospital> hospital = hospitalRepository.findById(hospitalId);
-    return hospital.map(surgeryRepository::findSurgeriesByHospital).orElse(null);
+    List<Surgery> results = (List<Surgery>) surgeryRepository.findAll();
+    results.removeIf(surgery -> surgery.getHospital().getId() != hospitalId);
+    return results;
   }
 
   public List<Surgery> findSurgeriesByDoctorId(Long doctorId) {

@@ -19,10 +19,6 @@ public class DoctorServices {
     private HospitalRepository hospitalRepository;
 
   public Doctor createDoctor(Doctor doctor) {
-    List<Hospital> fullHospitals = doctor.getListOfWorkableHospitals().stream()
-            .map(hospital -> hospitalRepository.findById(hospital.getId()).orElse(null))
-            .collect(Collectors.toList());
-    doctor.setListOfWorkableHospitals(fullHospitals);
     return doctorRepository.save(doctor);
     }
 
@@ -38,6 +34,4 @@ public class DoctorServices {
   public List<Doctor> findAllByListOfPossibleSurgeriesIsContainingIgnoreCase (SurgeryTypes surgeryType) {
     return doctorRepository.findAllByListOfPossibleSurgeriesIsContainingIgnoreCase(surgeryType);
   }
-
-  //getdoctors by time need a surgery contorller to get this.
 }

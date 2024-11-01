@@ -18,9 +18,6 @@ public class Doctor {
   @ElementCollection
   private List<SurgeryTypes> listOfPossibleSurgeries;
 
-  @OneToMany
-  private List<Hospital> listOfWorkableHospitals;
-
   public long getId() {
     return id;
   }
@@ -43,13 +40,5 @@ public class Doctor {
 
   public void setListOfPossibleSurgeries(List<SurgeryTypes> listOfPossibleSurgeries) {
     this.listOfPossibleSurgeries = listOfPossibleSurgeries;
-  }
-
-  public List<Hospital> getListOfWorkableHospitals() {
-    return listOfWorkableHospitals;
-  }
-
-  public void setListOfWorkableHospitals(List<Hospital> listOfWorkableHospitals) {
-    this.listOfWorkableHospitals = listOfWorkableHospitals;
   }
 }
